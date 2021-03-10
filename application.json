@@ -1,0 +1,8 @@
+{
+    "apps": [
+        {
+            "name": "meal-log",
+            "script": "./dist/index.js"
+        }
+    ]
+}

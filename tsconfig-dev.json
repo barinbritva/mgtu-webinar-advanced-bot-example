@@ -3,7 +3,7 @@
   "compilerOptions": {
     // Development specific
     "removeComments": false,
-    "sourceMap": true,
+    "inlineSourceMap": true,
     "watch": true,
     // Checks
     "noUnusedLocals": false,

@@ -11,12 +11,10 @@
     "moduleResolution": "Node",
     "target": "ES2015",
     "outDir": "./dist",
-    "declaration": true,
-    "declarationDir": "./dist/__types__",
     "resolveJsonModule": true,
     // Production specific
     "removeComments": true,
-    "sourceMap": false,
+    "inlineSourceMap": false,
     "watch": false,
     // Checks
     "allowUnreachableCode": false,
