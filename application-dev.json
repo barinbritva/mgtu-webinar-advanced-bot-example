@@ -3,7 +3,7 @@
         {
             "name": "meal-log",
             "script": "./dist/index.js",
-            "watch": ["./dist/**/*.js"]
+            "watch": ["./dist"]
         }
     ]
 }
