@@ -1,11 +1,11 @@
 import dotenv from 'dotenv';
-import {Telegraf, Scenes} from 'telegraf';
+import {Telegraf} from 'telegraf';
 import {session} from 'telegraf-session-mongodb';
 import {MongoClient} from 'mongodb';
 import {AppContext} from './core/interfaces/app-context';
 import {Configuration} from './core/services/configuration/Configuration';
-import {helpController} from './modules/common/controller/help-controller';
 import {MongoDb} from './core/services/database/mongo-db';
+import {applyRoutes} from './bootstrap/apply-routes';
 
 dotenv.config();
 
@@ -24,31 +24,23 @@ MongoDb.openConnection(config.mongoConnectUri)
   })
 
 function runApp(dbClient: MongoClient): Promise<void> {
-    const stage = new Scenes.Stage<AppContext>([helpController]);
+  bot.use(session(dbClient.db(), {collectionName: 'sessions'}));
+  applyRoutes(bot);
 
-    bot.use(session(dbClient.db(), {collectionName: 'sessions'}));
-    bot.use(stage.middleware());
-
-    bot.help(Scenes.Stage.enter('help'));
-    bot.hears('hi', (ctx) => {
-        console.info('???', ctx.session);
-        ctx.reply('Nice to see you');
-    })
-
-    return bot.launch();
+  return bot.launch();
 }
 
 function stopApp(reason?: string) {
-    bot.stop(reason);
-    MongoDb.closeConnection()
-        .catch((error) => {
-            console.error('Failed to close DB connection.', error);
-        });
+  bot.stop(reason);
+  MongoDb.closeConnection()
+      .catch((error) => {
+          console.error('Failed to close DB connection.', error);
+      });
 }
 
 process.once('SIGINT', () => {
-    stopApp('SIGINT')
+  stopApp('SIGINT');
 })
 process.once('SIGTERM', () => {
-    stopApp('SIGTERM')
+  stopApp('SIGTERM');
 })
