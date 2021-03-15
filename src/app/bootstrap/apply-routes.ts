@@ -1,6 +1,6 @@
-import {helpController} from '../modules/common/controller/help-controller';
+import {helpController} from '../../modules/common/controllers/help-controller';
 import {Telegraf, Scenes} from 'telegraf';
-import {AppContext} from '../core/interfaces/app-context';
+import {AppContext} from '../interfaces/app-context';
 
 function isItScene(controller: unknown): boolean {
   return controller instanceof Scenes.BaseScene;

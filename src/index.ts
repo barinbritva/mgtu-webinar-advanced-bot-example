@@ -1,46 +1,37 @@
 import dotenv from 'dotenv';
-import {Telegraf} from 'telegraf';
-import {session} from 'telegraf-session-mongodb';
-import {MongoClient} from 'mongodb';
-import {AppContext} from './core/interfaces/app-context';
-import {Configuration} from './core/services/configuration/Configuration';
-import {MongoDb} from './core/services/database/mongo-db';
-import {applyRoutes} from './bootstrap/apply-routes';
+import {Configuration} from './app/services/configuration';
+import { AppLauncher } from './app/bootstrap/app-launcher';
 
 dotenv.config();
 
 const config = new Configuration();
-const bot = new Telegraf<AppContext>(process.env.BOT_TOKEN);
+const appLauncher = new AppLauncher(config);
 
-MongoDb.openConnection(config.mongoConnectUri)
-  .then((dbClient) => {
-      return runApp(dbClient);
-  })
-  .then(() => {
-      console.info('App started.');
+appLauncher.start()
+  .then((bot) => {
+    bot.on('text', (ctx) => {
+      return ctx.reply(ctx.message.text);
+    });
+
+    console.info('App started.');
+
+    process.once('SIGINT', () => {
+      appLauncher.stop('SIGINT');
+    })
+    process.once('SIGTERM', () => {
+      appLauncher.stop('SIGTERM');
+    })
   })
   .catch((error) => {
-      console.error('Failed to start app.', error);
-  })
-
-function runApp(dbClient: MongoClient): Promise<void> {
-  bot.use(session(dbClient.db(), {collectionName: 'sessions'}));
-  applyRoutes(bot);
-
-  return bot.launch();
-}
-
-function stopApp(reason?: string) {
-  bot.stop(reason);
-  MongoDb.closeConnection()
-      .catch((error) => {
-          console.error('Failed to close DB connection.', error);
-      });
-}
-
-process.once('SIGINT', () => {
-  stopApp('SIGINT');
+    console.error('Failed to start app.', error);
 })
-process.once('SIGTERM', () => {
-  stopApp('SIGTERM');
-})
+
+// show buttons/inline buttons
+// bot.command('/profile', (ctx) => {
+
+// })
+
+// // @autocomplete
+// bot.command('/ingredients', (ctx) => {
+
+// })

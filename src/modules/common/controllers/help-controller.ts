@@ -1,5 +1,5 @@
 import { Scenes } from 'telegraf';
-import {AppContext} from '../../../core/interfaces/app-context';
+import {AppContext} from '../../../app/interfaces/app-context';
 
 const helpController = new Scenes.BaseScene<AppContext>('help');
 
