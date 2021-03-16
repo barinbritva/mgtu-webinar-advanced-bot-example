@@ -1,6 +1,6 @@
 import {Telegraf} from 'telegraf';
 import {session} from 'telegraf-session-mongodb';
-import {AppContext} from '../interfaces/app-context';
+import {AppSceneContext} from '../interfaces/app-context';
 import { Configuration } from '../services/configuration';
 import { MongoConnector } from '../services/mongo-connector';
 import { Router } from './../services/router';
@@ -8,7 +8,7 @@ import { Router } from './../services/router';
 export class AppLauncher {
   private readonly mongoConnector: MongoConnector;
   private readonly router: Router;
-  private readonly bot: Telegraf<AppContext>;
+  private readonly bot: Telegraf<AppSceneContext>;
 
   constructor (
       private readonly config: Configuration
@@ -18,7 +18,7 @@ export class AppLauncher {
     this.bot = new Telegraf(process.env.BOT_TOKEN);
   }
 
-  public async start(): Promise<Telegraf<AppContext>> {
+  public async start(): Promise<Telegraf<AppSceneContext>> {
     const dbClient = await this.mongoConnector.open();
     this.bot.use(session(dbClient.db(), {collectionName: 'sessions'}));
     this.router.applyRoutes(this.bot);

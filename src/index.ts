@@ -8,11 +8,7 @@ const config = new Configuration();
 const appLauncher = new AppLauncher(config);
 
 appLauncher.start()
-  .then((bot) => {
-    bot.on('text', (ctx) => {
-      return ctx.reply(ctx.message.text);
-    });
-
+  .then(() => {
     console.info('App started.');
 
     process.once('SIGINT', () => {
@@ -25,13 +21,3 @@ appLauncher.start()
   .catch((error) => {
     console.error('Failed to start app.', error);
 })
-
-// show buttons/inline buttons
-// bot.command('/profile', (ctx) => {
-
-// })
-
-// // @autocomplete
-// bot.command('/ingredients', (ctx) => {
-
-// })

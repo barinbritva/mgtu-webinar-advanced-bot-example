@@ -1,8 +1,8 @@
 import { Scenes } from 'telegraf';
-import {AppContext} from '../../../app/interfaces/app-context';
+import {AppSceneContext} from '../../../app/interfaces/app-context';
 
 function createHelpController(routePath: string) {
-  const helpController = new Scenes.BaseScene<AppContext>(routePath);
+  const helpController = new Scenes.BaseScene<AppSceneContext>(routePath);
 
   helpController.enter((ctx) => {
       console.info('enter', ctx.session);

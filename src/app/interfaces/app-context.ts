@@ -1,4 +1,7 @@
-import { SceneContext } from 'telegraf/typings/scenes';
+import { SceneContext, WizardContext } from 'telegraf/typings/scenes';
 
-export interface AppContext extends SceneContext {
+export interface AppSceneContext extends SceneContext {
+}
+
+export interface AppWizardContext extends WizardContext {
 }
