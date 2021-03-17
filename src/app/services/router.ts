@@ -21,7 +21,7 @@ export class Router {
       autocomplete: {
         type: 'on',
         path: 'inline_query',
-        controller: createCityAutocompleteController(bot)
+        controller: createCityAutocompleteController()
       }
     };
 

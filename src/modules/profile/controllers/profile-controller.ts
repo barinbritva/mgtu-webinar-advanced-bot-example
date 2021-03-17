@@ -47,7 +47,11 @@ export function createProfileController(routePath: string) {
         return ctx.reply('Убедитесь в корректности ввода');
       }
 
-      await ctx.reply('Укажите ваш город', Markup.keyboard([Markup.button.locationRequest('Передать местоположение')]).oneTime().resize())
+      await ctx.reply(
+        'Укажите ваш город, передайте местоположение или используейте автокомплит\n' +
+        `@meallogbot`,
+        Markup.keyboard([Markup.button.locationRequest('Передать местоположение')]).oneTime().resize()
+      )
 
       return ctx.wizard.next();
     },
