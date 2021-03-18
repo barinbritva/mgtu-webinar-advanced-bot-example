@@ -25,7 +25,10 @@ export function createProfileController(routePath: string) {
       let contactInput = getNameFromContact();
 
       if (MessageHelper.isInputEqualToCommnad(ctx, routePath)) {
-        return ctx.reply('Введите имя', Markup.keyboard([Markup.button.contactRequest('Взять из профиля')]).oneTime().resize());
+        return ctx.reply(
+          'Введите имя',
+          Markup.keyboard([Markup.button.contactRequest('Взять из профиля')]).oneTime().resize()
+        );
       }
 
       if (input === '' && contactInput === '') {
