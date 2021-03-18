@@ -11,6 +11,17 @@
 * Run `npm install`
 * Run `npm start`
 
+# Usage
+
+Open your bot using mention like `@mybotname` or by link like `https://t.me/mybotname`.
+
+* Send `/help` command to bot
+* Send `/profile` command to get examples of inline and keyboard buttons
+* Input `@mybotname` and after whitespace start typing to get an example of autocomplete
+
+# The code
+
+The main things happens in `src/app/services/router.ts` and files from `src/modules/**`.
 
 # Troubleshooting
 
